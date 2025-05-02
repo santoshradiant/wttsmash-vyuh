@@ -1,0 +1,53 @@
+/* WTT Theme Colors */
+:root {
+  /* Primary colors */
+  --wtt-green: #00A651;
+  --wtt-green-dark: #008c44;
+  
+  --wtt-red: #E63946;
+  --wtt-red-dark: #c62b37;
+  
+  --wtt-blue: #1D3557;
+  --wtt-blue-dark: #152942;
+  
+  --wtt-yellow: #FCBF49;
+  --wtt-yellow-dark: #e9a92c;
+}
+
+/* Background colors */
+.wtt\:bg-wtt-green { background-color: var(--wtt-green); }
+.wtt\:bg-wtt-green-dark { background-color: var(--wtt-green-dark); }
+
+.wtt\:bg-wtt-red { background-color: var(--wtt-red); }
+.wtt\:bg-wtt-red-dark { background-color: var(--wtt-red-dark); }
+
+.wtt\:bg-wtt-blue { background-color: var(--wtt-blue); }
+.wtt\:bg-wtt-blue-dark { background-color: var(--wtt-blue-dark); }
+
+.wtt\:bg-wtt-yellow { background-color: var(--wtt-yellow); }
+.wtt\:bg-wtt-yellow-dark { background-color: var(--wtt-yellow-dark); }
+
+/* Text colors */
+.wtt\:text-wtt-green { color: var(--wtt-green); }
+.wtt\:text-wtt-red { color: var(--wtt-red); }
+.wtt\:text-wtt-blue { color: var(--wtt-blue); }
+.wtt\:text-wtt-yellow { color: var(--wtt-yellow); }
+
+/* Border colors */
+.wtt\:border-wtt-green { border-color: var(--wtt-green); }
+.wtt\:border-wtt-red { border-color: var(--wtt-red); }
+.wtt\:border-wtt-blue { border-color: var(--wtt-blue); }
+.wtt\:border-wtt-yellow { border-color: var(--wtt-yellow); }
+
+/* Hover states */
+.hover\:wtt\:bg-wtt-green:hover { background-color: var(--wtt-green); }
+.hover\:wtt\:bg-wtt-green-dark:hover { background-color: var(--wtt-green-dark); }
+
+.hover\:wtt\:bg-wtt-red:hover { background-color: var(--wtt-red); }
+.hover\:wtt\:bg-wtt-red-dark:hover { background-color: var(--wtt-red-dark); }
+
+.hover\:wtt\:bg-wtt-blue:hover { background-color: var(--wtt-blue); }
+.hover\:wtt\:bg-wtt-blue-dark:hover { background-color: var(--wtt-blue-dark); }
+
+.hover\:wtt\:bg-wtt-yellow:hover { background-color: var(--wtt-yellow); }
+.hover\:wtt\:bg-wtt-yellow-dark:hover { background-color: var(--wtt-yellow-dark); }

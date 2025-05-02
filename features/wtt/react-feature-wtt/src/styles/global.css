@@ -1,0 +1,42 @@
+/* Hide vertical line for rightmost elements in each row */
+.wtt\:grid .player-card:last-child .vertical-line,
+.wtt\:grid .player-card:nth-child(1n):nth-last-child(-n+1) .vertical-line {
+  display: none;
+}
+
+/* For 2 columns grid */
+@media (min-width: 640px) {
+  .wtt\:grid .player-card:nth-child(2n) .vertical-line {
+    display: none;
+  }
+}
+
+/* For 3 columns grid */
+@media (min-width: 768px) {
+  .wtt\:grid .player-card:nth-child(2n) .vertical-line {
+    display: block; /* Reset from previous breakpoint */
+  }
+  .wtt\:grid .player-card:nth-child(3n) .vertical-line {
+    display: none;
+  }
+}
+
+/* For 4 columns grid */
+@media (min-width: 1024px) {
+  .wtt\:grid .player-card:nth-child(3n) .vertical-line {
+    display: block; /* Reset from previous breakpoint */
+  }
+  .wtt\:grid .player-card:nth-child(4n) .vertical-line {
+    display: none;
+  }
+}
+
+/* For 5 columns grid */
+@media (min-width: 1280px) {
+  .wtt\:grid .player-card:nth-child(4n) .vertical-line {
+    display: block; /* Reset from previous breakpoint */
+  }
+  .wtt\:grid .player-card:nth-child(5n) .vertical-line {
+    display: none;
+  }
+}

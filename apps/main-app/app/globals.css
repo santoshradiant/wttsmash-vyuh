@@ -1,0 +1,8 @@
+@import 'tailwindcss' source(none);
+
+@import '@vyuh/react-core/styles.css';
+@import '@vyuh/react-feature-system/styles.css';
+
+@import 'react-feature-wtt/styles.css';
+
+@source './';
