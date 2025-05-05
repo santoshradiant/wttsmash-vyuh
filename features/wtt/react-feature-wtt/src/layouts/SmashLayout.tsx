@@ -15,7 +15,7 @@ import { getBgColorBaseTextClass, getBgColorBorderClass, getBgColorClass, getLog
 import { ChevronDown } from 'lucide-react';
 import { SiteSettings } from '../utils/types';
 import { languageOptions, useTranslation, setLanguage } from '../i18n';
-
+import { MobileMainMenu } from './components/MobileMainMenu';
 
 /**
  * Smash Layout for routes that display content with a menu, sidebar, header, and body
@@ -224,24 +224,31 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       </div>
     </aside>
   )
+
+  // Render mobile menu for mobile view
+  const renderMobileMenu = () => (
+    <div
+      className={`wtt:fixed wtt:inset-0 wtt:z-50 wtt:bg-black/50 wtt:transition-opacity wtt:duration-300
+          ${showSidebar ? 'wtt:opacity-100' : 'wtt:opacity-0 wtt:pointer-events-none'}`}
+      onClick={(e) => {
+        // Close menu when clicking the backdrop (outside the menu)
+        if (e.target === e.currentTarget) {
+          setShowSidebar(false);
+        }
+      }}
+    >
+      <div
+        className={`wtt:w-full wtt:top-16 wtt:absolute wtt:bg-black wtt:transition-transform wtt:duration-300 wtt:ease-in-out wtt:transform
+          ${showSidebar ? 'wtt:translate-x-0' : 'wtt:-translate-x-full'}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <MobileMainMenu onClose={() => setShowSidebar(false)} />
+      </div>
+    </div>
+  );
+
   const renderSideMenu = () => (
-    <aside className={`${isMobile ? 'wtt:fixed wtt:top-16 wtt:left-0 wtt:z-50 wtt:w-full wtt:transition-transform wtt:duration-300 wtt:ease-in-out' : 'wtt:w-24 wtt:flex-shrink-0'} 
-      wtt:overflow-y-auto wtt:border-r wtt:border-gray-200 wtt:bg-black
-      wtt:flex wtt:flex-col wtt:justify-between wtt:items-center wtt:pb-15
-      ${isMobile && !showSidebar ? 'wtt:transform wtt:-translate-x-full' : 'wtt:transform wtt:translate-x-0'}`}>
-      {/* {isMobile && (
-        <div className="wtt:flex wtt:justify-end wtt:p-2 wtt:w-full">
-          <button
-            className="wtt:p-2 wtt:rounded-full wtt:bg-gray-800 wtt:text-white"
-            onClick={() => setShowSidebar(false)}
-          >
-            <span className="wtt:sr-only">Close</span>
-            <svg className="wtt:h-6 wtt:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      )} */}
+    <aside className="wtt:w-24 wtt:flex-shrink-0 wtt:overflow-y-auto wtt:border-r wtt:border-gray-800 wtt:bg-black wtt:flex wtt:flex-col wtt:justify-between wtt:items-center">
       <div className="wtt:w-full">
         <MainMenu />
       </div>
@@ -279,11 +286,11 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       <div className="wtt:bg-black wtt:w-full wtt:flex wtt:h-full wtt:items-center wtt:justify-between wtt:px-4">
         {isMobile && (
           <button
-            className="wtt:mr-2"
+            className="wtt:mr-2 wtt:p-2 wtt:rounded-md wtt:text-white"
             onClick={() => setShowSidebar(!showSidebar)}
-            // onClick={() => setShowSidebar(true)}
+          // onClick={() => setShowSidebar(true)}
           >
-            <svg className="wtt:h-6 wtt:w-6 wtt:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="wtt:h-6 wtt:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -305,7 +312,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           {/* GET TICKETS NOW button */}
           <a
             href="#"
-            className={`${bgColor} wtt:text-white wtt:font-bold wtt:px-6 wtt:py-1 wtt:rounded-md wtt:uppercase wtt:text-center wtt:no-underline wtt:tracking-wide wtt:font-medium`}
+            className={`${bgColor} wtt:text-white wtt:font-bold wtt:px-6 wtt:py-1 wtt:rounded-md wtt:uppercase wtt:text-center wtt:no-underline wtt:tracking-wide wtt:font-medium ${isMobile ? 'wtt:text-sm wtt:px-3' : ''}`}
           >
             {t('common.getTickets')}
           </a>
@@ -383,6 +390,8 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       {/* Custom header with menu button */}
       {renderHeader()}
 
+      {/* Mobile menu overlay */}
+      {isMobile && renderMobileMenu()}
       {/* Main content area with menu, body, and sidebar */}
       <div className="wtt:flex wtt:flex-1 wtt:w-full wtt:overflow-hidden">
         {/* Always render the side menu, but control its visibility with CSS */}
@@ -390,7 +399,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
 
         {isMobile ? (
           <>
-           {renderSideMenu()}
+            {/* {renderSideMenu()} */}
             {renderMainView()}
             {renderChampionsAside()}
           </>
@@ -402,7 +411,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           </>
         ) : (
           <>
-           {renderSideMenu()}
+            {renderSideMenu()}
             {renderMainView()}
             {renderChampionsAside()}
           </>
