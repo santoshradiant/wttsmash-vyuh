@@ -223,11 +223,11 @@ function SmashLayoutComponent({ route }: { route: Route }) {
     </aside>
   )
   const renderSideMenu = () => (
-    <aside className={`${isMobile ? 'wtt:fixed wtt:top-0 wtt:left-0 wtt:bottom-0 wtt:z-50 wtt:w-full wtt:transition-transform wtt:duration-300 wtt:ease-in-out' : 'wtt:w-24 wtt:flex-shrink-0'} 
+    <aside className={`${isMobile ? 'wtt:fixed wtt:top-16 wtt:left-0 wtt:z-50 wtt:w-full wtt:transition-transform wtt:duration-300 wtt:ease-in-out' : 'wtt:w-24 wtt:flex-shrink-0'} 
       wtt:overflow-y-auto wtt:border-r wtt:border-gray-200 wtt:bg-black
       wtt:flex wtt:flex-col wtt:justify-between wtt:items-center wtt:pb-15
       ${isMobile && !showSidebar ? 'wtt:transform wtt:-translate-x-full' : 'wtt:transform wtt:translate-x-0'}`}>
-      {isMobile && (
+      {/* {isMobile && (
         <div className="wtt:flex wtt:justify-end wtt:p-2 wtt:w-full">
           <button 
             className="wtt:p-2 wtt:rounded-full wtt:bg-gray-800 wtt:text-white"
@@ -239,7 +239,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             </svg>
           </button>
         </div>
-      )}
+      )} */}
       <div className="wtt:w-full">
         <MainMenu />
       </div>
@@ -278,7 +278,8 @@ function SmashLayoutComponent({ route }: { route: Route }) {
         {isMobile && (
           <button 
             className="wtt:mr-2"
-            onClick={() => setShowSidebar(true)}
+            onClick={() => setShowSidebar(!showSidebar)}
+            // onClick={() => setShowSidebar(true)}
           >
             <svg className="wtt:h-6 wtt:w-6 wtt:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
