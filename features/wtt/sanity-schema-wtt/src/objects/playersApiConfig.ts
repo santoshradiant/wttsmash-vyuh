@@ -28,6 +28,7 @@ export const playersApiConfig = defineType({
       of: [{ type: 'string' }],
       options: {
         list: [
+          { title: 'All Players', value: 'all_players' },
           { title: 'Men\'s Singles', value: 'mens_singles' },
           { title: 'Women\'s Singles', value: 'womens_singles' },
           { title: 'Men\'s Doubles', value: 'mens_doubles' },
@@ -36,7 +37,7 @@ export const playersApiConfig = defineType({
         ],
         layout: 'grid',
       },
-      initialValue: ['mens_singles', 'womens_singles'],
+      initialValue: ['all_players', 'mens_singles', 'womens_singles'],
     }),
   ],
   preview: {
@@ -47,6 +48,7 @@ export const playersApiConfig = defineType({
     prepare({ eventId, categories = [] }) {
       // Format categories for display
       const categoryNames = {
+        all_players: 'ALL',
         mens_singles: 'MS',
         womens_singles: 'WS',
         mens_doubles: 'MD',
@@ -55,7 +57,7 @@ export const playersApiConfig = defineType({
       };
 
       const formattedCategories = categories
-        .map(cat => categoryNames[cat] || cat)
+        .map((cat: string) => categoryNames[cat as keyof typeof categoryNames] || cat)
         .join(', ');
 
       return {

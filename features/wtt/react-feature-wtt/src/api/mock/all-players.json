@@ -1,0 +1,184 @@
+{
+  "players": [
+    {
+      "id": "123980",
+      "firstName": "Tomokazu",
+      "lastName": "HARIMOTO",
+      "country": "JPN",
+      "ranking": 9,
+      "points": 2050,
+      "gender": "M"
+    },
+    {
+      "id": "123971",
+      "firstName": "Daeseong",
+      "lastName": "CHO",
+      "country": "KOR",
+      "ranking": 31,
+      "points": 670,
+      "gender": "M"
+    },
+    {
+      "id": "132992",
+      "firstName": "Alexis",
+      "lastName": "LEBRUN",
+      "country": "FRA",
+      "ranking": 32,
+      "points": 653,
+      "gender": "M"
+    },
+    {
+      "id": "201504",
+      "firstName": "Aditya",
+      "lastName": "SAREEN",
+      "country": "AUS",
+      "ranking": 42,
+      "points": 556,
+      "gender": "M"
+    },
+    {
+      "id": "111050",
+      "firstName": "Alvaro",
+      "lastName": "ROBLES",
+      "country": "ESP",
+      "ranking": 49,
+      "points": 460,
+      "gender": "M"
+    },
+    {
+      "id": "100439",
+      "firstName": "Ahmed",
+      "lastName": "SALEH",
+      "country": "EGY",
+      "ranking": 56,
+      "points": 415,
+      "gender": "M"
+    },
+    {
+      "id": "123682",
+      "firstName": "Manav Vikash",
+      "lastName": "THAKKAR",
+      "country": "IND",
+      "ranking": 60,
+      "points": 350,
+      "gender": "M"
+    },
+    {
+      "id": "123300",
+      "firstName": "Jules",
+      "lastName": "ROLLAND",
+      "country": "FRA",
+      "ranking": 69,
+      "points": 305,
+      "gender": "M"
+    },
+    {
+      "id": "131671",
+      "firstName": "Maciej",
+      "lastName": "KUBIK",
+      "country": "POL",
+      "ranking": 95,
+      "points": 203,
+      "gender": "M"
+    },
+    {
+      "id": "113679",
+      "firstName": "Mehdi",
+      "lastName": "BOULOUSSA",
+      "country": "ALG",
+      "ranking": 105,
+      "points": 190,
+      "gender": "M"
+    },
+    {
+      "id": "133713",
+      "firstName": "Izaac",
+      "lastName": "QUEK",
+      "country": "SGP",
+      "ranking": 115,
+      "points": 179,
+      "gender": "M"
+    },
+    {
+      "id": "102380",
+      "firstName": "Paul",
+      "lastName": "DRINKHALL",
+      "country": "ENG",
+      "ranking": 121,
+      "points": 164,
+      "gender": "M"
+    },
+    {
+      "id": "123659",
+      "firstName": "Adrien",
+      "lastName": "RASSENFOSSE",
+      "country": "BEL",
+      "ranking": 123,
+      "points": 162,
+      "gender": "M"
+    },
+    {
+      "id": "123031",
+      "firstName": "Guilherme",
+      "lastName": "TEODORO",
+      "country": "BRA",
+      "ranking": 128,
+      "points": 145,
+      "gender": "M"
+    },
+    {
+      "id": "121222",
+      "firstName": "Jishan",
+      "lastName": "LIANG",
+      "country": "USA",
+      "ranking": 142,
+      "points": 125,
+      "gender": "M"
+    },
+    {
+      "id": "117142",
+      "firstName": "Lynda",
+      "lastName": "LOGHRAIBI",
+      "country": "ALG",
+      "ranking": 143,
+      "points": 108,
+      "gender": "F"
+    },
+    {
+      "id": "123977",
+      "firstName": "Shin",
+      "lastName": "YUBIN",
+      "country": "KOR",
+      "ranking": 15,
+      "points": 1850,
+      "gender": "F"
+    },
+    {
+      "id": "137627",
+      "firstName": "Yangzi",
+      "lastName": "LIU",
+      "country": "AUS",
+      "ranking": 17,
+      "points": 1720,
+      "gender": "F"
+    },
+    {
+      "id": "123672",
+      "firstName": "Hina",
+      "lastName": "HAYATA",
+      "country": "JPN",
+      "ranking": 6,
+      "points": 2450,
+      "gender": "F"
+    },
+    {
+      "id": "120972",
+      "firstName": "Orawan",
+      "lastName": "PARANANG",
+      "country": "THA",
+      "ranking": 10,
+      "points": 2100,
+      "gender": "F"
+    }
+  ]
+}

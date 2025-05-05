@@ -14,10 +14,10 @@ export interface SubEvent {
   maxTeamSize: number;
   waitingListAllowed: boolean;
   eventId: number;
-  subEventCode: string; // MS, WS, MD, WD, XD
+  subEventCode: string; // MS, WS, MD, WD, XD, ALL
   numberOfTotalMatches: number;
   subEventDrawTypeId: string;
-  gender: string; // M, W, X
+  gender: string; // M, W, X, A (for All)
 }
 
 // Participant interface based on the provided schema
@@ -47,4 +47,20 @@ export interface Participant {
   EntryDrawName: string; // e.g., "Main Draw"
   EntryQuotaType: string; // e.g., "AER"
   GenderValue: string; // "M" or "F"
+}
+
+// Interface for the AllPlayers API response
+export interface AllPlayersResponse {
+  players: AllPlayer[];
+}
+
+// Interface for a player from the AllPlayers API
+export interface AllPlayer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  ranking: number;
+  points: number;
+  gender: string; // "M" or "F"
 }

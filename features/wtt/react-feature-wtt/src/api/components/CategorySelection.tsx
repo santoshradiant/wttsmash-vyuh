@@ -2,6 +2,7 @@ import React from 'react';
 import { useWttStore } from '../../utils/store';
 
 const categoryNames: Record<string, string> = {
+  all_players: 'ALL PLAYERS',
   mens_singles: "MEN'S SINGLES",
   womens_singles: "WOMEN'S SINGLES",
   mens_doubles: "MEN'S DOUBLES",

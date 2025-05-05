@@ -2,7 +2,7 @@ import { TypeDescriptor } from '@vyuh/react-core';
 import { APIConfiguration } from '@vyuh/react-feature-system';
 import React from 'react';
 import { PlayersGrid } from './components/PlayersGrid';
-import { Participant, SubEvent } from './types';
+import { AllPlayer, AllPlayersResponse, Participant, SubEvent } from './types';
 
 interface PlayerData {
   eventId: string;
@@ -30,6 +30,7 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
 
     this.eventId = props?.eventId || '';
     this.enabledCategories = props?.enabledCategories || [
+      'all_players',
       'mens_singles',
       'womens_singles',
     ];
@@ -49,18 +50,40 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
       // Get Sub Events: https://wttapigateway-new.azure-api.net/prod/api/cms/GetAllLiveOrActiveSubEventsDetails/2932
       // Get Players for Sub-Event: https://wttapigateway-new.azure-api.net/prod/api/cms/GetPlayerEntriesforEventBySubEventId_WithParticDetails/2932/3187
       // Player Profile Pics: https://wttapigateway-new.azure-api.net/prod/api/cms/GetAllPlayerProfilePics
+      // All Players API: https://tabletennisapitest.azurewebsites.net/Players/GetPlayers
 
       // Convert the mock data to the SubEvent type
       const subEvents = (await import('./mock/sub-events.json').then(
         (res) => res.default,
       )) as SubEvent[];
 
+      // Add the AllPlayers sub-event
+      const allPlayersSubEvent: SubEvent = {
+        subEventId: 9999, // Using a unique ID
+        subEventName: 'All Players',
+        subEventDesc: null,
+        isActive: true,
+        isDeleted: false,
+        isOptional: false,
+        minTeamSize: 0,
+        maxTeamSize: 0,
+        waitingListAllowed: false,
+        eventId: parseInt(this.eventId) || 0,
+        subEventCode: 'ALL',
+        numberOfTotalMatches: 0,
+        subEventDrawTypeId: '0',
+        gender: 'A', // A for All
+      };
+
+      // Add the AllPlayers sub-event to the beginning of the array
+      const updatedSubEvents = [allPlayersSubEvent, ...subEvents];
+
       const playerProfilePics = await import(
         './mock/player-headshots.json'
       ).then((res) => res.default);
 
       return {
-        subEvents,
+        subEvents: updatedSubEvents,
         profilePics: playerProfilePics.reduce(
           (obj, item) => {
             obj[item.ittfid] = item.headShot;
@@ -77,22 +100,136 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
   }
 
   /**
+   * Fetch data from the AllPlayers API
+   *
+   * @returns Promise with the API response
+   */
+  private async fetchAllPlayersApi(): Promise<AllPlayersResponse> {
+    const apiUrl = 'https://tabletennisapitest.azurewebsites.net/Players/GetPlayers';
+    const apiKey = '22CE0455-1351-4E85-B815-28F90986EB20';
+
+    console.log("Starting API request to fetch players...");
+
+    // Fetch players from the API with a very long timeout since the API is slow
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600000); // 600 second timeout (5 minutes)
+
+    try {
+      const playersResponse = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "ApiKey": apiKey,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      console.log("API response status:", playersResponse.status);
+
+      if (!playersResponse.ok) {
+        throw new Error(`API request failed with status ${playersResponse.status}`);
+      }
+
+      const playersData = await playersResponse.json();
+      console.log("Players API Response:", playersData);
+
+      // Convert the API response to our expected format
+      return {
+        players: Array.isArray(playersData.Result) ? playersData.Result.map((player: any) => ({
+          id: player.id || player.Id || String(player.PlayerId) || '',
+          firstName: player.FirstName || player.firstName || player.PlayerGivenName || '',
+          lastName: player.LastName || player.lastName || player.PlayerFamilyName || '',
+          country: player.Country || player.country || player.OrgCode || '',
+          ranking: player.Ranking || player.ranking || player.CurrentRanking || 0,
+          points: player.Points || player.points || player.CurrentRankingPoints || 0,
+          gender: player.Gender || player.gender || player.GenderValue || 'M'
+        })) : []
+      };
+    } catch (error) {
+      console.error('Error fetching from AllPlayers API:', error);
+
+      // Clear the timeout if it's still active
+      clearTimeout(timeoutId);
+
+      // Check if it's an abort error (timeout)
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.warn('API request timed out after 2 minutes');
+      }
+
+      // Instead of falling back to mock data, rethrow the error
+      // This will keep the loading state active in the UI
+      throw error;
+    }
+  }
+
+  /**
+   * Convert AllPlayers data to Participant format
+   *
+   * @param allPlayersResponse The response from the AllPlayers API
+   * @returns Array of participants in the standard format
+   */
+  private convertAllPlayersToParticipants(allPlayersResponse: AllPlayersResponse): Participant[] {
+    return allPlayersResponse.players.map((player) => ({
+      EventId: 0,
+      SubEventId: 9999,
+      SubEventCode: 'ALL',
+      SubEventAgeCategory: 'SEN',
+      ittfid: player.id,
+      birthDate: '', // Not available in the API
+      PlayerGivenName: player.firstName,
+      PlayerFamilyName: player.lastName,
+      IndividualName: `${player.firstName} ${player.lastName}`,
+      OrgCode: player.country,
+      Status: 'Confirmed',
+      Seed: 0,
+      CurrentRanking: player.ranking,
+      CurrentRankingPoints: player.points,
+      CancellationPastFinalDeadline: false,
+      ProtectedRanking: null,
+      Penalized: null,
+      ApplyZeroPointPenalty: false,
+      IsDoubleEntry: null,
+      TeamName: null,
+      TeamNumber: null,
+      TournamentPlayersGroupId: null,
+      EntryDrawName: 'All Players',
+      EntryQuotaType: 'ALL',
+      GenderValue: player.gender,
+    }));
+  }
+
+  /**
    * Fetch participants for a specific sub-event
    *
-   * @param subEventId The ID of the sub-event to fetch participants for
+   * @param subEventCode The code of the sub-event to fetch participants for
    * @returns Array of participants
    */
   async fetchParticipantsBySubEvent(
     subEventCode: string,
   ): Promise<Participant[]> {
     try {
-      const participants = {
+      // For the ALL sub-event, fetch from the AllPlayers API
+      if (subEventCode === 'ALL') {
+        // Use our robust API fetching method
+        const allPlayersResponse = await this.fetchAllPlayersApi();
+        return this.convertAllPlayersToParticipants(allPlayersResponse);
+      }
+
+      // For other sub-events, use the existing mock data
+      const participants: Record<string, Promise<any>> = {
         MS: import('./mock/MS.json').then((res) => res.default),
         WS: import('./mock/WS.json').then((res) => res.default),
         MD: import('./mock/MD.json').then((res) => res.default),
         WD: import('./mock/WD.json').then((res) => res.default),
         XD: import('./mock/XD.json').then((res) => res.default),
       };
+
+      if (!participants[subEventCode]) {
+        throw new Error(`No data available for sub-event code: ${subEventCode}`);
+      }
 
       return await participants[subEventCode];
     } catch (error) {

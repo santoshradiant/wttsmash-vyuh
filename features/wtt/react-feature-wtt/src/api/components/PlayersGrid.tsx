@@ -34,10 +34,8 @@ export function PlayersGrid({
   fetchForSubEvent,
 }: PlayersGridProps) {
   // State for selected sub-event, category, and draw
-  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEvent | null>(
-    subEvents[0] || null,
-  );
-  const [selectedCategory, setSelectedCategory] = useState(categories[0] || '');
+  const [selectedSubEvent, setSelectedSubEvent] = useState<SubEvent | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDraw, setSelectedDraw] = useState('');
   const [participantsByDraw, setParticipantsByDraw] = useState<
     Record<string, Participant[]>
@@ -48,6 +46,12 @@ export function PlayersGrid({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDoublesCategory, setIsDoublesCategory] = useState(false);
+
+  // Initialize state in useEffect to avoid hydration mismatch
+  useEffect(() => {
+    setSelectedCategory(categories[0] || '');
+    setSelectedSubEvent(subEvents[0] || null);
+  }, [categories, subEvents]);
 
   const settings = useWttStore((state) => state.settings);
   const colorType = settings?.theme?.toString();
@@ -176,6 +180,7 @@ export function PlayersGrid({
     const matchingSubEvent = subEvents.find((se) => {
       // Map category to subEventCode
       const categoryToSubEventCode: Record<string, string> = {
+        all_players: 'ALL',
         mens_singles: 'MS',
         womens_singles: 'WS',
         mens_doubles: 'MD',
@@ -258,7 +263,8 @@ export function PlayersGrid({
       {loading && (
         <div className="wtt:text-center wtt:py-8 wtt:text-gray-500">
           <div className="wtt:animate-spin wtt:rounded-full wtt:h-8 wtt:w-8 wtt:border-t-2 wtt:border-b-2 wtt:border-blue-500 wtt:mx-auto wtt:mb-4"></div>
-          Loading participants...
+          <p className="wtt:mb-2">Loading participants...</p>
+          <p className="wtt:text-sm wtt:text-gray-400">This may take up to 2 minutes to complete.</p>
         </div>
       )}
 
