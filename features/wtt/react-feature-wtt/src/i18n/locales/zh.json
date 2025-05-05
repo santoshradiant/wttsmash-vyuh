@@ -1,0 +1,55 @@
+{
+  "common": {
+    "getTickets": "立即购票",
+    "champions": "CHAMPIONS 2024",
+    "logo": "标志"
+  },
+
+  "menu": {
+    "home": "首页",
+    "players": "选手",
+    "matches": "比赛",
+    "schedule": "赛程",
+    "results": "结果",
+    "venue": "场馆",
+    "tickets": "门票"
+  },
+
+  "playerCategories": {
+    "allPlayers": "All Players",
+    "mensSingles": "Men's Singles",
+    "womensSingles": "Women's Singles",
+    "mensDoubles": "Men's Doubles",
+    "womensDoubles": "Women's Doubles",
+    "mixedDoubles": "Mixed Doubles"
+  },
+
+  "player": {
+    "worldRanking": "世界排名",
+    "points": "积分",
+    "seed": "种子"
+  },
+
+  "players": {
+    "loadingParticipants": "正在加载参赛选手...",
+    "loadingTimeEstimate": "这可能需要长达2分钟的时间才能完成。",
+    "errorLoadingParticipants": "加载参赛选手失败。请重试。",
+    "noTeamsFound": "未找到团队",
+    "noParticipantsFound": "未找到参赛选手",
+    "noTeamsFoundFor": "未找到团队",
+    "noParticipantsFoundFor": "未找到参赛选手"
+  },
+
+  "footer": {
+    "copyright": "世界乒乓球有限公司版权所有。",
+    "wttLogoAlt": "WTT标志",
+    "wttText": "WTT",
+    "visitSocialPage": "访问我们的"
+  },
+
+  "cta": {
+    "title": "注册获取独家更新",
+    "description": "免费注册，优先获取独家优惠、新闻和更多信息",
+    "button": "立即注册"
+  }
+}

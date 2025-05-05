@@ -4,8 +4,9 @@ import { DrawSelection } from './DrawSelection';
 import { PlayerCard } from './PlayerCard';
 import { DoublePlayerCard } from './DoublePlayerCard';
 import { Participant, SubEvent } from '../types';
-import { getBgColorBaseTextClass, getBgColorClass, getTextColorClass, getTextColorFontClass } from '../../layouts/components/helper';
+import { getBgColorBaseTextClass } from '../../layouts/components/helper';
 import { useWttStore } from '../../utils/store';
+import { useTranslation } from '../../i18n';
 
 // Interface for grouped doubles players
 interface DoublesTeam {
@@ -55,11 +56,10 @@ export function PlayersGrid({
 
   const settings = useWttStore((state) => state.settings);
   const colorType = settings?.theme?.toString();
+  const currentLanguage = settings?.language || 'en';
+  const { t } = useTranslation(currentLanguage);
 
-
-  const bgColor = getBgColorClass(colorType ?? '');
-  const textColor = getTextColorClass(colorType ?? '');
-  const textColorFontMedium = getTextColorFontClass(colorType ?? '');
+  // We only need textColorBase for the UI
   const textColorBase = getBgColorBaseTextClass(colorType ?? '');
 
   // Fetch participants when sub-event or category changes
@@ -236,9 +236,6 @@ export function PlayersGrid({
             categories={categories}
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
-            bgColor={bgColor}
-            textColor={textColor}
-            textColorFontMedium={textColorFontMedium}
             textColorBase={textColorBase}
           />
         </div>
@@ -250,9 +247,6 @@ export function PlayersGrid({
               selectedDraw={selectedDraw}
               onDrawChange={setSelectedDraw}
               availableDraws={availableDraws}
-              bgColor={bgColor}
-              textColor={textColor}
-              textColorFontMedium={textColorFontMedium}
               textColorBase={textColorBase}
             />
           </div>
@@ -263,14 +257,14 @@ export function PlayersGrid({
       {loading && (
         <div className="wtt:text-center wtt:py-8 wtt:text-gray-500">
           <div className="wtt:animate-spin wtt:rounded-full wtt:h-8 wtt:w-8 wtt:border-t-2 wtt:border-b-2 wtt:border-blue-500 wtt:mx-auto wtt:mb-4"></div>
-          <p className="wtt:mb-2">Loading participants...</p>
-          <p className="wtt:text-sm wtt:text-gray-400">This may take up to 2 minutes to complete.</p>
+          <p className="wtt:mb-2">{t('players.loadingParticipants')}</p>
+          <p className="wtt:text-sm wtt:text-gray-400">{t('players.loadingTimeEstimate')}</p>
         </div>
       )}
 
       {error && (
         <div className="wtt:text-center wtt:py-4 wtt:text-red-500 wtt:bg-red-50 wtt:rounded wtt:p-4 wtt:mb-4">
-          {error}
+          {t('players.errorLoadingParticipants')}
         </div>
       )}
 
@@ -307,7 +301,7 @@ export function PlayersGrid({
                         </div>
                       ) : (
                         <div className="wtt:text-center wtt:py-4 wtt:text-gray-500">
-                          No teams found for {drawName}.
+                          {t('players.noTeamsFound')} {drawName}.
                         </div>
                       )}
                     </div>
@@ -332,7 +326,7 @@ export function PlayersGrid({
                         </div>
                       ) : (
                         <div className="wtt:text-center wtt:py-4 wtt:text-gray-500">
-                          No participants found for {drawName}.
+                          {t('players.noParticipantsFound')} {drawName}.
                         </div>
                       )}
                     </div>
@@ -342,7 +336,7 @@ export function PlayersGrid({
             </div>
           ) : (
             <div className="wtt:text-center wtt:py-4 wtt:text-gray-500">
-              No {isDoublesCategory ? 'teams' : 'participants'} found for{' '}
+              {isDoublesCategory ? t('players.noTeamsFoundFor') : t('players.noParticipantsFoundFor')}{' '}
               {selectedSubEvent?.subEventName}.
             </div>
           )}

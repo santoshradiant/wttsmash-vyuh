@@ -68,7 +68,7 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
         minTeamSize: 0,
         maxTeamSize: 0,
         waitingListAllowed: false,
-        eventId: parseInt(this.eventId) || 0,
+        eventId: parseInt(this.eventId) || 6767,
         subEventCode: 'ALL',
         numberOfTotalMatches: 0,
         subEventDrawTypeId: '0',

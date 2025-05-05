@@ -14,6 +14,8 @@ import { useWttStore } from '../utils/store';
 import { getBgColorBaseTextClass, getBgColorBorderClass, getBgColorClass, getLogoByThemeWise, getSidePanelFooterLogoByThemeWise, getTextColorClass, getTextColorFontClass } from './components/helper';
 import { ChevronDown } from 'lucide-react';
 import { SiteSettings } from '../utils/types';
+import { languageOptions, useTranslation, setLanguage } from '../i18n';
+
 
 /**
  * Smash Layout for routes that display content with a menu, sidebar, header, and body
@@ -62,10 +64,10 @@ function SmashLayoutComponent({ route }: { route: Route }) {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkIfMobile();
     window.addEventListener('resize', checkIfMobile);
-    
+
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
@@ -102,16 +104,16 @@ function SmashLayoutComponent({ route }: { route: Route }) {
   );
 
   const renderChampionsAside = () => (
-    <aside className={`${isMobile ? 'wtt:fixed wtt:inset-0 wtt:z-50 wtt:w-full' : 'wtt:w-70 wtt:flex-shrink-0'} 
+    <aside className={`${isMobile ? 'wtt:fixed wtt:inset-0 wtt:z-50 wtt:w-full' : 'wtt:w-70 wtt:flex-shrink-0'}
       wtt:overflow-y-auto wtt:border-l wtt:border-gray-200 wtt:bg-white
       ${isMobile && !showChampions ? 'wtt:hidden' : ''}`}>
       {isMobile && (
         <div className="wtt:flex wtt:justify-end wtt:p-2">
-          <button 
+          <button
             className="wtt:p-2 wtt:rounded-full wtt:bg-gray-200"
             onClick={() => setShowChampions(false)}
           >
-            
+
             <span className="wtt:sr-only">Close</span>
             <svg className="wtt:h-6 wtt:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -132,7 +134,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
               className="wtt:h-20 wtt:w-auto"
             />}
           </div>
-          <h2 className="wtt:text-2xl wtt:font-bold wtt:text-gray-800">CHAMPIONS 2024</h2>
+          <h2 className="wtt:text-2xl wtt:font-bold wtt:text-gray-800">{t('common.champions')}</h2>
         </div>
 
         {/* Champions List */}
@@ -144,7 +146,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             </div>
 
             <div className="wtt:flex wtt:flex-col wtt:items-end">
-              <span className={`wtt:font-medium ${textColorBase}`}>Men's Singles</span>
+              <span className={`wtt:font-medium ${textColorBase}`}>{t('playerCategories.mensSingles')}</span>
               <span className="wtt:font-medium wtt:text-gray-900">WANG CHUQIN</span>
             </div>
 
@@ -154,7 +156,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           {/* Women's Singles */}
           <div dir={isRTL ? 'rtl' : 'ltr'} className="wtt:p-4  wtt:border-gray-200 wtt:flex wtt:items-center wtt:justify-between">
             <div className="wtt:flex wtt:flex-col wtt:items-start">
-              <span className={`wtt:font-medium ${textColorBase}`}>Women's Singles</span>
+              <span className={`wtt:font-medium ${textColorBase}`}>{t('playerCategories.womensSingles')}</span>
               <span className="wtt:font-medium wtt:text-gray-900">CHEN MENG</span>
             </div>
             <div className="wtt:flex-shrink-0">
@@ -171,7 +173,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             </div>
 
             <div className="wtt:flex wtt:flex-col wtt:items-end">
-              <span className={`wtt:font-medium ${textColorBase}`}>Men's Doubles</span>
+              <span className={`wtt:font-medium ${textColorBase}`}>{t('playerCategories.mensDoubles')}</span>
               <span className="wtt:font-medium wtt:text-gray-900">MA LONG</span>
               <span className="wtt:font-medium wtt:text-gray-900">WANG CHUQIN</span>
             </div>
@@ -182,7 +184,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           {/* Women's Doubles */}
           <div dir={isRTL ? 'rtl' : 'ltr'} className="wtt:p-4  wtt:border-gray-200 wtt:flex wtt:items-center wtt:justify-between">
             <div className="wtt:flex wtt:flex-col wtt:items-start">
-              <span className={`wtt:font-medium ${textColorBase}`}>Women's Doubles</span>
+              <span className={`wtt:font-medium ${textColorBase}`}>{t('playerCategories.womensDoubles')}</span>
               <span className="wtt:font-medium wtt:text-gray-900">CHEN MENG</span>
               <span className="wtt:font-medium wtt:text-gray-900">WANG MANYU</span>
             </div>
@@ -199,7 +201,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             </div>
 
             <div className="wtt:flex wtt:flex-col wtt:items-end">
-              <span className={`wtt:font-medium ${textColorBase}`}>Mixed Doubles</span>
+              <span className={`wtt:font-medium ${textColorBase}`}>{t('playerCategories.mixedDoubles')}</span>
               <span className="wtt:font-medium wtt:text-gray-900">WANG CHUQIN</span>
               <span className="wtt:font-medium wtt:text-gray-900">SUN YINGSHA</span>
             </div>
@@ -229,7 +231,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       ${isMobile && !showSidebar ? 'wtt:transform wtt:-translate-x-full' : 'wtt:transform wtt:translate-x-0'}`}>
       {/* {isMobile && (
         <div className="wtt:flex wtt:justify-end wtt:p-2 wtt:w-full">
-          <button 
+          <button
             className="wtt:p-2 wtt:rounded-full wtt:bg-gray-800 wtt:text-white"
             onClick={() => setShowSidebar(false)}
           >
@@ -249,7 +251,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
   // Mobile menu toggle buttons
   const renderMobileMenuButtons = () => (
     <div className="wtt:fixed wtt:bottom-0 wtt:left-0 wtt:right-0 wtt:bg-white wtt:border-t wtt:border-gray-200 wtt:flex wtt:justify-around wtt:p-2 wtt:z-40">
-      <button 
+      <button
         className="wtt:p-2 wtt:rounded-md wtt:bg-gray-100 wtt:flex wtt:flex-col wtt:items-center"
         onClick={() => setShowSidebar(true)}
       >
@@ -258,8 +260,8 @@ function SmashLayoutComponent({ route }: { route: Route }) {
         </svg>
         <span className="wtt:text-xs">Menu</span>
       </button>
-      
-      <button 
+
+      <button
         className="wtt:p-2 wtt:rounded-md wtt:bg-gray-100 wtt:flex wtt:flex-col wtt:items-center"
         onClick={() => setShowChampions(true)}
       >
@@ -276,7 +278,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
     <header className="wtt:shadow-md wtt:h-16 wtt:w-full wtt:flex-shrink-0 wtt:bg-white wtt:z-10">
       <div className="wtt:bg-black wtt:w-full wtt:flex wtt:h-full wtt:items-center wtt:justify-between wtt:px-4">
         {isMobile && (
-          <button 
+          <button
             className="wtt:mr-2"
             onClick={() => setShowSidebar(!showSidebar)}
             // onClick={() => setShowSidebar(true)}
@@ -305,7 +307,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             href="#"
             className={`${bgColor} wtt:text-white wtt:font-bold wtt:px-6 wtt:py-1 wtt:rounded-md wtt:uppercase wtt:text-center wtt:no-underline wtt:tracking-wide wtt:font-medium`}
           >
-            {getCurrentLanguageName() === 'English' ? 'GET TICKETS NOW' : 'تذاكر'}
+            {t('common.getTickets')}
           </a>
 
           {/* Language Selector */}
@@ -322,13 +324,13 @@ function SmashLayoutComponent({ route }: { route: Route }) {
 
             {showLanguageMenu && (
               <div className="wtt:absolute wtt:right-0 wtt:mt-1 wtt:w-[150px] wtt:bg-white wtt:rounded-md wtt:shadow-lg wtt:z-20 wtt:py-1 wtt:border wtt:border-gray-200">
-                {languages.map((language) => (
+                {languageOptions.map((lang) => (
                   <button
-                    key={language.code}
-                    className={`wtt:block wtt:w-full wtt:text-left wtt:px-4 wtt:py-2 hover:wtt:bg-gray-100 ${settings?.language === language.code ? 'wtt:font-bold wtt:bg-gray-50' : ''}`}
-                    onClick={() => handleLanguageChange(language.code)}
+                    key={lang.code}
+                    className={`wtt:block wtt:w-full wtt:text-left wtt:px-4 wtt:py-2 hover:wtt:bg-gray-100 ${settings?.language === lang.code ? 'wtt:font-bold wtt:bg-gray-50' : ''}`}
+                    onClick={() => handleLanguageChange(lang.code)}
                   >
-                    {language.name}
+                    {lang.name}
                   </button>
                 ))}
               </div>
@@ -339,20 +341,27 @@ function SmashLayoutComponent({ route }: { route: Route }) {
     </header>
   );
 
-  // Add these helper functions inside SmashLayoutComponent
-  const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'ar', name: 'العربية' }
-  ];
+  // Use our new language system
+  const { t, language, setLanguage: changeLanguage } = useTranslation(settings?.language || 'en');
+
+  // Set HTML lang attribute when component mounts or language changes
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = settings?.language || 'en';
+    }
+  }, [settings?.language]);
 
   // Get current language name
   const getCurrentLanguageName = () => {
-    const lang = languages.find(l => l.code === settings?.language);
+    const lang = languageOptions.find(l => l.code === settings?.language);
     return lang ? lang.name : 'English';
   };
 
   // Handle language change
   const handleLanguageChange = (langCode: string) => {
+    // Update language in our language service
+    changeLanguage(langCode);
+
     // Update language in store
     useWttStore.setState({
       settings: {
@@ -360,6 +369,12 @@ function SmashLayoutComponent({ route }: { route: Route }) {
         language: langCode
       }
     });
+
+    // Update HTML lang attribute for accessibility and SEO
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = langCode;
+    }
+
     setShowLanguageMenu(false);
   };
 
@@ -372,7 +387,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       <div className="wtt:flex wtt:flex-1 wtt:w-full wtt:overflow-hidden">
         {/* Always render the side menu, but control its visibility with CSS */}
         {/* {renderSideMenu()} */}
-        
+
         {isMobile ? (
           <>
            {renderSideMenu()}
@@ -393,7 +408,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           </>
         )}
       </div>
-      
+
       {/* Mobile menu toggle buttons at bottom */}
       {/* {isMobile && renderMobileMenuButtons()} */}
     </div>

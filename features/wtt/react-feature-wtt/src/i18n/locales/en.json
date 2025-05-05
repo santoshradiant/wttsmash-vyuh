@@ -1,0 +1,55 @@
+{
+  "common": {
+    "getTickets": "GET TICKETS NOW",
+    "champions": "CHAMPIONS 2024",
+    "logo": "Logo"
+  },
+
+  "menu": {
+    "home": "Home",
+    "players": "Players",
+    "matches": "Matches",
+    "schedule": "Schedule",
+    "results": "Results",
+    "venue": "Venue",
+    "tickets": "Tickets"
+  },
+
+  "playerCategories": {
+    "allPlayers": "All Players",
+    "mensSingles": "Men's Singles",
+    "womensSingles": "Women's Singles",
+    "mensDoubles": "Men's Doubles",
+    "womensDoubles": "Women's Doubles",
+    "mixedDoubles": "Mixed Doubles"
+  },
+
+  "player": {
+    "worldRanking": "WR",
+    "points": "Points",
+    "seed": "Seed"
+  },
+
+  "players": {
+    "loadingParticipants": "Loading participants...",
+    "loadingTimeEstimate": "This may take up to 2 minutes to complete.",
+    "errorLoadingParticipants": "Failed to load participants. Please try again.",
+    "noTeamsFound": "No teams found for",
+    "noParticipantsFound": "No participants found for",
+    "noTeamsFoundFor": "No teams found for",
+    "noParticipantsFoundFor": "No participants found for"
+  },
+
+  "footer": {
+    "copyright": "World Table Tennis Pte. Ltd. All Rights Reserved.",
+    "wttLogoAlt": "WTT Logo",
+    "wttText": "WTT",
+    "visitSocialPage": "Visit our"
+  },
+
+  "cta": {
+    "title": "SIGN UP FOR EXCLUSIVE UPDATES",
+    "description": "Sign up for free to get first access to exclusive offers, news and more",
+    "button": "SIGN UP"
+  }
+}

@@ -1,22 +1,21 @@
 import React from 'react';
 import { useWttStore } from '../../utils/store';
+import { useTranslation } from '../../i18n';
 
-const categoryNames: Record<string, string> = {
-  all_players: 'ALL PLAYERS',
-  mens_singles: "MEN'S SINGLES",
-  womens_singles: "WOMEN'S SINGLES",
-  mens_doubles: "MEN'S DOUBLES",
-  womens_doubles: "WOMEN'S DOUBLES",
-  mixed_doubles: 'MIXED DOUBLES',
+// Category IDs to translation keys mapping
+const categoryTranslationKeys: Record<string, string> = {
+  all_players: 'playerCategories.allPlayers',
+  mens_singles: 'playerCategories.mensSingles',
+  womens_singles: 'playerCategories.womensSingles',
+  mens_doubles: 'playerCategories.mensDoubles',
+  womens_doubles: 'playerCategories.womensDoubles',
+  mixed_doubles: 'playerCategories.mixedDoubles',
 };
 
 interface CategorySelectionProps {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  bgColor: string;
-  textColor: string;
-  textColorFontMedium: string;
   textColorBase: string;
 }
 
@@ -24,17 +23,17 @@ export function CategorySelection({
   categories,
   selectedCategory,
   onCategoryChange,
-  bgColor,
-  textColor,
-  textColorFontMedium,
   textColorBase,
 }: CategorySelectionProps) {
-  const getCategoryName = (categoryId: string): string => {
-    return categoryNames[categoryId] || categoryId;
-  };
-
   const settings = useWttStore((state) => state.settings);
-  const isRTL = settings?.language === 'ar';
+  const currentLanguage = settings?.language || 'en';
+  const { t } = useTranslation(currentLanguage);
+  const isRTL = currentLanguage === 'ar';
+
+  const getCategoryName = (categoryId: string): string => {
+    const translationKey = categoryTranslationKeys[categoryId];
+    return translationKey ? t(translationKey) : categoryId;
+  };
 
   return (
     <div dir={isRTL ? 'rtl' : 'ltr'} className="wtt:flex wtt:items-center wtt:space-x-4 wtt:overflow-x-auto">

@@ -1,0 +1,55 @@
+{
+  "common": {
+    "getTickets": "تذاكر",
+    "champions": "CHAMPIONS 2024",
+    "logo": "شعار"
+  },
+
+  "menu": {
+    "home": "الرئيسية",
+    "players": "اللاعبين",
+    "matches": "المباريات",
+    "schedule": "الجدول",
+    "results": "النتائج",
+    "venue": "المكان",
+    "tickets": "التذاكر"
+  },
+
+  "playerCategories": {
+    "allPlayers": "All Players",
+    "mensSingles": "Men's Singles",
+    "womensSingles": "Women's Singles",
+    "mensDoubles": "Men's Doubles",
+    "womensDoubles": "Women's Doubles",
+    "mixedDoubles": "Mixed Doubles"
+  },
+
+  "player": {
+    "worldRanking": "التصنيف العالمي",
+    "points": "النقاط",
+    "seed": "البذرة"
+  },
+
+  "players": {
+    "loadingParticipants": "جاري تحميل المشاركين...",
+    "loadingTimeEstimate": "قد يستغرق هذا ما يصل إلى دقيقتين للاكتمال.",
+    "errorLoadingParticipants": "فشل تحميل المشاركين. يرجى المحاولة مرة أخرى.",
+    "noTeamsFound": "لم يتم العثور على فرق لـ",
+    "noParticipantsFound": "لم يتم العثور على مشاركين لـ",
+    "noTeamsFoundFor": "لم يتم العثور على فرق لـ",
+    "noParticipantsFoundFor": "لم يتم العثور على مشاركين لـ"
+  },
+
+  "footer": {
+    "copyright": "تينيس الطاولة العالمية ذ.م.م. جميع الحقوق محفوظة.",
+    "wttLogoAlt": "شعار WTT",
+    "wttText": "WTT",
+    "visitSocialPage": "زيارة صفحتنا على"
+  },
+
+  "cta": {
+    "title": "قم بالتسجيل للحصول على التحديثات الحصرية",
+    "description": "قم بالتسجيل مجانًا لتحصل أولاً على العروض الحصرية والأخبار والمزيد",
+    "button": "اشتراك"
+  }
+}

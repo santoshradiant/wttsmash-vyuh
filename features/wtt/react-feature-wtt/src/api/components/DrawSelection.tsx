@@ -1,13 +1,11 @@
 import React from 'react';
 import { useWttStore } from '../../utils/store';
+import { useTranslation } from '../../i18n';
 
 interface DrawSelectionProps {
   selectedDraw: string;
   onDrawChange: (draw: string) => void;
   availableDraws: string[];
-  bgColor: string;
-  textColor: string;
-  textColorFontMedium: string;
   textColorBase: string;
 }
 
@@ -15,14 +13,13 @@ export function DrawSelection({
   selectedDraw,
   onDrawChange,
   availableDraws,
-  bgColor,
-  textColor,
-  textColorFontMedium,
   textColorBase,
 }: DrawSelectionProps) {
 
   const settings = useWttStore((state) => state.settings);
-  const isRTL = settings?.language === 'ar';
+  const currentLanguage = settings?.language || 'en';
+  const { t } = useTranslation(currentLanguage);
+  const isRTL = currentLanguage === 'ar';
 
   return (
     <div dir={isRTL ? 'rtl' : 'ltr'} className="wtt:flex wtt:items-center wtt:space-x-4 wtt:overflow-x-auto">

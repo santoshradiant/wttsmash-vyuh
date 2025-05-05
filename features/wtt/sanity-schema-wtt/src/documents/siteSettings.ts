@@ -177,6 +177,12 @@ const siteSettings = defineType({
               validation: (Rule) => Rule.required(),
             },
             {
+              name: 'title_chinese',
+              title: 'Title Chinese',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
               name: 'iconName',
               title: 'Icon Name',
               description: 'Icon name from the lucide-react library',

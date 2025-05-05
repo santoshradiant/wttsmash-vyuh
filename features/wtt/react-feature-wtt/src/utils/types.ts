@@ -25,6 +25,7 @@ export type SiteSettings = {
   mainNavigation?: Array<{
     title: string;
     title_arabic?: string;
+    title_chinese?: string;
     link: string;
     iconName?: string;
     isExternal?: boolean;
