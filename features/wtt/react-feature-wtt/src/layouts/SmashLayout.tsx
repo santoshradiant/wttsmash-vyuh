@@ -222,20 +222,11 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       </div>
     </aside>
   )
-  const loginButton = () => (
-    <button
-      className={`${bgColor} wtt:mt-[25px] wtt:mx-0 wtt:text-white wtt:font-medium wtt:py-2 wtt:px-6 wtt:rounded-sm wtt:w-full wtt:flex wtt:justify-center wtt:items-center`}
-      onClick={() => plugins.navigation.push('/login')}
-    >
-      Login
-    </button>
-  );
-
   const renderSideMenu = () => (
-    <aside className={`${isMobile ? 'wtt:fixed wtt:inset-0 wtt:z-50 wtt:w-full' : 'wtt:w-24 wtt:flex-shrink-0'} 
+    <aside className={`${isMobile ? 'wtt:fixed wtt:top-0 wtt:left-0 wtt:bottom-0 wtt:z-50 wtt:w-full wtt:transition-transform wtt:duration-300 wtt:ease-in-out' : 'wtt:w-24 wtt:flex-shrink-0'} 
       wtt:overflow-y-auto wtt:border-r wtt:border-gray-200 wtt:bg-black
       wtt:flex wtt:flex-col wtt:justify-between wtt:items-center wtt:pb-15
-      ${isMobile && !showSidebar ? 'wtt:hidden' : ''}`}>
+      ${isMobile && !showSidebar ? 'wtt:transform wtt:-translate-x-full' : 'wtt:transform wtt:translate-x-0'}`}>
       {isMobile && (
         <div className="wtt:flex wtt:justify-end wtt:p-2 wtt:w-full">
           <button 
@@ -251,9 +242,6 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       )}
       <div className="wtt:w-full">
         <MainMenu />
-      </div>
-      <div className="wtt:w-full wtt:px-2">
-        {loginButton()}
       </div>
     </aside>
   );
@@ -381,12 +369,14 @@ function SmashLayoutComponent({ route }: { route: Route }) {
 
       {/* Main content area with menu, body, and sidebar */}
       <div className="wtt:flex wtt:flex-1 wtt:w-full wtt:overflow-hidden">
+        {/* Always render the side menu, but control its visibility with CSS */}
+        {/* {renderSideMenu()} */}
+        
         {isMobile ? (
           <>
+           {renderSideMenu()}
             {renderMainView()}
-            {renderSideMenu()}
             {renderChampionsAside()}
-            {/* Remove the mobile menu buttons at the bottom */}
           </>
         ) : isRTL ? (
           <>
@@ -396,12 +386,15 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           </>
         ) : (
           <>
-            {renderSideMenu()}
+           {renderSideMenu()}
             {renderMainView()}
             {renderChampionsAside()}
           </>
         )}
       </div>
+      
+      {/* Mobile menu toggle buttons at bottom */}
+      {isMobile && renderMobileMenuButtons()}
     </div>
   );
 }
