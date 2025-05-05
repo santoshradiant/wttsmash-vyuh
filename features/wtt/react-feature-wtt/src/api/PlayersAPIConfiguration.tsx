@@ -110,9 +110,9 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
 
     console.log("Starting API request to fetch players...");
 
-    // Fetch players from the API with a very long timeout since the API is slow
+    // Fetch players from the API with a 30 second timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 600000); // 600 second timeout (5 minutes)
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
     try {
       const playersResponse = await fetch(apiUrl, {
@@ -154,14 +154,33 @@ export class PlayersAPIConfiguration extends APIConfiguration<PlayerData> {
       // Clear the timeout if it's still active
       clearTimeout(timeoutId);
 
-      // Check if it's an abort error (timeout)
+      // Check if it's an abort error (timeout) or any other error
       if (error instanceof Error && error.name === 'AbortError') {
-        console.warn('API request timed out after 2 minutes');
+        console.warn('API request timed out after 30 seconds');
       }
 
-      // Instead of falling back to mock data, rethrow the error
-      // This will keep the loading state active in the UI
-      throw error;
+      console.log("Loading fallback data from all-players.json");
+
+      // Load the mock data as a fallback
+      try {
+        const mockData = await import('./mock/all-players.json').then(res => res.default);
+
+        // Convert the mock data to the expected format
+        return {
+          players: Array.isArray(mockData.Result) ? mockData.Result.map((player: any) => ({
+            id: player.IttfId || '',
+            firstName: player.PlayerGivenName || '',
+            lastName: player.PlayerFamilyName || '',
+            country: player.OrganizationCode || '',
+            ranking: parseInt(player.CurrentRanking) || 0,
+            points: parseInt(player.CurrentRankingPoints) || 0,
+            gender: player.Gender || 'M'
+          })) : []
+        };
+      } catch (mockError) {
+        console.error('Error loading fallback data:', mockError);
+        throw mockError;
+      }
     }
   }
 
