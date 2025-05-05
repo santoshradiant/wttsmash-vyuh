@@ -394,7 +394,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
       </div>
       
       {/* Mobile menu toggle buttons at bottom */}
-      {isMobile && renderMobileMenuButtons()}
+      {/* {isMobile && renderMobileMenuButtons()} */}
     </div>
   );
 }
