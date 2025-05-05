@@ -12,6 +12,8 @@ import { Header } from './components/Header';
 import { MainMenu } from './components/MainMenu';
 import { useWttStore } from '../utils/store';
 import { getBgColorBaseTextClass, getBgColorBorderClass, getBgColorClass, getLogoByThemeWise, getSidePanelFooterLogoByThemeWise, getTextColorClass, getTextColorFontClass } from './components/helper';
+import { ChevronDown } from 'lucide-react';
+import { SiteSettings } from '../utils/types';
 
 /**
  * Smash Layout for routes that display content with a menu, sidebar, header, and body
@@ -53,6 +55,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
   const [isMobile, setIsMobile] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [showChampions, setShowChampions] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   // Check if mobile on client side
   useEffect(() => {
@@ -230,13 +233,13 @@ function SmashLayoutComponent({ route }: { route: Route }) {
 
   const renderSideMenu = () => (
     <aside className={`${isMobile ? 'wtt:fixed wtt:inset-0 wtt:z-50 wtt:w-full' : 'wtt:w-24 wtt:flex-shrink-0'} 
-      wtt:overflow-y-auto wtt:border-r wtt:border-gray-200 wtt:bg-gray-100
+      wtt:overflow-y-auto wtt:border-r wtt:border-gray-200 wtt:bg-black
       wtt:flex wtt:flex-col wtt:justify-between wtt:items-center wtt:pb-15
       ${isMobile && !showSidebar ? 'wtt:hidden' : ''}`}>
       {isMobile && (
-        <div className="wtt:flex wtt:justify-end wtt:p-2">
+        <div className="wtt:flex wtt:justify-end wtt:p-2 wtt:w-full">
           <button 
-            className="wtt:p-2 wtt:rounded-full wtt:bg-gray-200"
+            className="wtt:p-2 wtt:rounded-full wtt:bg-gray-800 wtt:text-white"
             onClick={() => setShowSidebar(false)}
           >
             <span className="wtt:sr-only">Close</span>
@@ -246,10 +249,10 @@ function SmashLayoutComponent({ route }: { route: Route }) {
           </button>
         </div>
       )}
-      <div>
+      <div className="wtt:w-full">
         <MainMenu />
       </div>
-      <div>
+      <div className="wtt:w-full wtt:px-2">
         {loginButton()}
       </div>
     </aside>
@@ -280,10 +283,101 @@ function SmashLayoutComponent({ route }: { route: Route }) {
     </div>
   );
 
+  // Update the header to include menu toggle for mobile
+  const renderHeader = () => (
+    <header className="wtt:shadow-md wtt:h-16 wtt:w-full wtt:flex-shrink-0 wtt:bg-white wtt:z-10">
+      <div className="wtt:bg-black wtt:w-full wtt:flex wtt:h-full wtt:items-center wtt:justify-between wtt:px-4">
+        {isMobile && (
+          <button 
+            className="wtt:mr-2"
+            onClick={() => setShowSidebar(true)}
+          >
+            <svg className="wtt:h-6 wtt:w-6 wtt:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        )}
+        <div className="wtt:flex wtt:items-center wtt:gap-2">
+          {logo && (
+            <img
+              src={plugins.content.provider.image(logo, {
+                width: 48,
+                height: 48,
+              })}
+              alt={settings?.title || 'Logo'}
+              className="wtt:h-[48px] wtt:w-auto wtt:fill-white"
+            />
+          )}
+        </div>
+
+        <div className="wtt:flex wtt:items-center wtt:gap-4">
+          {/* GET TICKETS NOW button */}
+          <a
+            href="#"
+            className={`${bgColor} wtt:text-white wtt:font-bold wtt:px-6 wtt:py-1 wtt:rounded-md wtt:uppercase wtt:text-center wtt:no-underline wtt:tracking-wide wtt:font-medium`}
+          >
+            {getCurrentLanguageName() === 'English' ? 'GET TICKETS NOW' : 'تذاكر'}
+          </a>
+
+          {/* Language Selector */}
+          <div className="wtt:relative">
+            <button
+              className={`${bgColor} wtt:flex wtt:items-center wtt:justify-between wtt:gap-2 wtt:px-3 wtt:py-1 wtt:rounded-md wtt:text-white wtt:font-medium wtt:w-[120px]`}
+              onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+              aria-expanded={showLanguageMenu}
+              aria-haspopup="true"
+            >
+              <span>{getCurrentLanguageName()}</span>
+              <ChevronDown size={16} />
+            </button>
+
+            {showLanguageMenu && (
+              <div className="wtt:absolute wtt:right-0 wtt:mt-1 wtt:w-[150px] wtt:bg-white wtt:rounded-md wtt:shadow-lg wtt:z-20 wtt:py-1 wtt:border wtt:border-gray-200">
+                {languages.map((language) => (
+                  <button
+                    key={language.code}
+                    className={`wtt:block wtt:w-full wtt:text-left wtt:px-4 wtt:py-2 hover:wtt:bg-gray-100 ${settings?.language === language.code ? 'wtt:font-bold wtt:bg-gray-50' : ''}`}
+                    onClick={() => handleLanguageChange(language.code)}
+                  >
+                    {language.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+
+  // Add these helper functions inside SmashLayoutComponent
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'ar', name: 'العربية' }
+  ];
+
+  // Get current language name
+  const getCurrentLanguageName = () => {
+    const lang = languages.find(l => l.code === settings?.language);
+    return lang ? lang.name : 'English';
+  };
+
+  // Handle language change
+  const handleLanguageChange = (langCode: string) => {
+    // Update language in store
+    useWttStore.setState({
+      settings: {
+        ...settings as SiteSettings,
+        language: langCode
+      }
+    });
+    setShowLanguageMenu(false);
+  };
+
   return (
     <div className="wtt:flex wtt:h-screen wtt:w-full wtt:flex-col wtt:overflow-hidden">
-      {/* Header - fixed at top, full width */}
-      <Header />
+      {/* Custom header with menu button */}
+      {renderHeader()}
 
       {/* Main content area with menu, body, and sidebar */}
       <div className="wtt:flex wtt:flex-1 wtt:w-full wtt:overflow-hidden">
@@ -292,7 +386,7 @@ function SmashLayoutComponent({ route }: { route: Route }) {
             {renderMainView()}
             {renderSideMenu()}
             {renderChampionsAside()}
-            {renderMobileMenuButtons()}
+            {/* Remove the mobile menu buttons at the bottom */}
           </>
         ) : isRTL ? (
           <>
