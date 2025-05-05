@@ -284,12 +284,10 @@ export function PlayersGrid({
 
                   return (
                     <div key={drawName} className="wtt:mb-8">
-                      {/* <h4 className="wtt:text-md wtt:font-medium wtt:mb-4 wtt:pb-2 wtt:border-b wtt:border-gray-200">
-                        {drawTeams.length} teams
-                      </h4> */}
+                      <div className="wtt:mb-4 wtt:mt-4 wtt:border-b wtt:border-gray-200"></div>
 
                       {drawTeams.length > 0 ? (
-                        <div className="wtt:grid wtt:grid-cols-1 wtt:sm:grid-cols-2 wtt:md:grid-cols-3 wtt:lg:grid-cols-4 wtt:gap-4">
+                        <div className="wtt:grid wtt:grid-cols-1 wtt:gap-4 wtt:xs:grid-cols-1 wtt:sm:grid-cols-2 wtt:md:grid-cols-2 wtt:lg:grid-cols-3 wtt:xl:grid-cols-4 wtt:2xl:grid-cols-5">
                           {drawTeams.map((team) => (
                             <DoublePlayerCard
                               key={team.teamName}
@@ -314,14 +312,10 @@ export function PlayersGrid({
 
                   return (
                     <div key={drawName} className="wtt:mb-8">
-                      {/* <h4 className="wtt:text-md wtt:font-medium wtt:mb-4 wtt:pb-2 wtt:border-b wtt:border-gray-200">
-                        {drawParticipants.length} participants
-                      </h4> */}
-
                       <div className="wtt:mb-4 wtt:mt-4 wtt:border-b wtt:border-gray-200"></div>
 
                       {drawParticipants.length > 0 ? (
-                        <div className="wtt:grid wtt:grid-cols-1 wtt:sm:grid-cols-2 wtt:md:grid-cols-3 wtt:lg:grid-cols-4 wtt:gap-4">
+                        <div className="wtt:grid wtt:grid-cols-1 wtt:gap-4 wtt:xs:grid-cols-1 wtt:sm:grid-cols-2 wtt:md:grid-cols-2 wtt:lg:grid-cols-3 wtt:xl:grid-cols-4 wtt:2xl:grid-cols-5">
                           {drawParticipants.map((participant) => (
                             <PlayerCard
                               key={participant.ittfid}
