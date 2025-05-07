@@ -90,7 +90,13 @@ export function Footer() {
             >
               {social?.icon ? (
                 <img
-                  src={plugins.content.provider.image(social.icon, {
+                  src={plugins.content.provider.image({
+                    type: 'image',
+                    asset: {
+                      ref: social.icon.asset._ref,
+                      type: 'reference'
+                    }
+                  }, {
                     width: 24,
                     height: 24,
                   })}

@@ -462,6 +462,38 @@ const siteSettings = defineType({
           description: 'Default description for search engine results',
         },
         {
+          name: 'keywords',
+          title: 'Keywords',
+          type: 'text',
+          rows: 1,
+          description: 'Default description for search engine results',
+        },
+        {
+          name: 'opengraphtitle',
+          title: 'opengraphtitle',
+          type: 'string',
+          description: 'Default description for search engine results',
+        },
+        {
+          name: 'opengraphdesc',
+          title: 'opengraphdesc',
+          type: 'string',
+          description: 'Default description for search engine results',
+        },
+        {
+          name: 'opengraphsitename',
+          title: 'opengraphsitename',
+          type: 'string',
+          description: 'Default description for search engine results',
+        },
+        {
+          name: 'opengraphtype',
+          title: 'opengraphtype',
+          type: 'string',
+          description: 'Default description for search engine results',
+        },
+        
+        {
           name: 'openGraphImage',
           title: 'Default Open Graph Image',
           type: 'image',

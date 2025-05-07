@@ -2,7 +2,7 @@ import { useVyuh } from '@vyuh/react-core';
 import React, { useState } from 'react';
 import { useWttStore } from '../../utils/store';
 import { ChevronDown } from 'lucide-react';
-import { SiteSettings } from 'src/utils/types';
+import { SiteSettings } from '../../utils/types';
 import { getBgColorClass, getLogoByThemeWise } from './helper';
 import { useTranslation, languageOptions } from '../../i18n';
 

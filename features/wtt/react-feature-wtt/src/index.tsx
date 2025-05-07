@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   FeatureDescriptor,
   SystemReadyEventType,
   useVyuhStore,
 } from '@vyuh/react-core';
 import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
-import { APIExtensionDescriptor } from '@vyuh/react-extension-api';
+// import { APIExtensionDescriptor } from '@vyuh/react-extension-api';
 import {
   APIContentDescriptor,
   RouteDescriptor,
@@ -21,11 +22,14 @@ import { PlayersAPIConfiguration } from './api/PlayersAPIConfiguration';
 import { PlayersGrid } from './api/components/PlayersGrid';
 export { PlayersAPIConfiguration, PlayersGrid };
 
+// Create the icon element as a function to avoid JSX in object literals
+const getBoxesIcon = () => React.createElement(Boxes);
+
 export const wtt = new FeatureDescriptor({
   name: 'wtt',
   title: 'WTT',
   description: 'World Table Tennis Federation',
-  icon: <Boxes />,
+  icon: getBoxesIcon(),
   extensions: [
     new ContentExtensionDescriptor({
       contents: [
